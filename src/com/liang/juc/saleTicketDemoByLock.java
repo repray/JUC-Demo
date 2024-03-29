@@ -37,8 +37,10 @@ class TicketByLock {
 
 
     public void sale() {
+        //加锁
         lock.lock();
         try {
+            //编写业务代码
             if (num >= 1) {
                 num--;
                 System.out.println(Thread.currentThread().getName() + "已卖出第" + (10 - num) + "张票,还剩余" + num + "张票");
@@ -46,6 +48,7 @@ class TicketByLock {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            //解锁
             lock.unlock();
         }
 
