@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 线程之间的通信问题
  * 生产者和消费者问题 等待唤醒,通知唤醒
- * 线程交替执行 A B 同时操作一个变量 num=0
+* 线程交替执行 A B 同时操作一个变量 num=0
  * A num+1
  * B num-1
  * 使用Lock和 Condition.await Condition.signalAll 代替synchronized wait notifyAll
