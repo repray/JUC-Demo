@@ -10,6 +10,7 @@ public class CallableTest {
         MyCallableThread thread = new MyCallableThread();
         FutureTask futureTask = new FutureTask(thread);
         new Thread(futureTask,"callable").start();
+        //这个get方法可能会产生阻塞
         System.out.println(String.valueOf(futureTask.get()));
     }
 }
@@ -26,6 +27,7 @@ class MyCallableThread implements Callable<String> {
 
     @Override
     public String call() {
+        //callable结果会被缓存
         System.out.println("callable线程启动");
         return "1024";
     }
