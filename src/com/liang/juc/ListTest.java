@@ -1,16 +1,24 @@
 package com.liang.juc;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * java.util.ConcurrentModificationException 并发修改异常
  */
 public class ListTest {
     public static void main(String[] args) {
-//        List<String> list = Arrays.asList("1", "2", "3");
-        List<String> list = new ArrayList<>();
+    /**
+     * 并发下,arraylist不安全
+     * 解决方案:
+     * 1. List<String> list = new Vector<>();
+     * 2. List<String> list = Collections.synchronizedList(new ArrayList<>());
+     * 3.  List<String> list = new CopyOnWriteArrayList();
+     */
+        /**
+         * CopyOnWrite COW 写入时复制
+         */
+        List<String> list = new CopyOnWriteArrayList();
 
         for (int i = 0; i < 10; i++) {
             new Thread(() -> {
