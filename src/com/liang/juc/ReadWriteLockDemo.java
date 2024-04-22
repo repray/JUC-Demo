@@ -5,9 +5,16 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * 独占锁 线程独自占有
+ * 共享锁 线程共享
+ *
+ * 读-读 锁可以共享
+ * 读-写 写-写 锁不可以共享
+ */
 public class ReadWriteLockDemo {
     public static void main(String[] args) {
-        MyCache myCache = new MyCache();
+        MyCacheLock myCache = new MyCacheLock();
 
         for (int i = 1; i <= 5; i++) {
             String temp = String.valueOf(i);
