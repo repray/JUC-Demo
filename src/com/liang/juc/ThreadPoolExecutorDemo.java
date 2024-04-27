@@ -1,7 +1,6 @@
 package com.liang.juc;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * 池化技术
@@ -17,12 +16,28 @@ import java.util.concurrent.Executors;
  */
 public class ThreadPoolExecutorDemo {
     public static void main(String[] args) {
-        ExecutorService threadPool = Executors.newSingleThreadExecutor();//创建单例线程池
+//        ExecutorService threadPool = Executors.newSingleThreadExecutor();//创建单例线程池
 //        ExecutorService threadPool = Executors.newFixedThreadPool(5);//创建一个固定大小的线程池
 //        ExecutorService threadPool = Executors.newCachedThreadPool();//创建一个可变线程池
 
+        // 使用ThreadPoolExecutor创建自定义线程池
+        ExecutorService threadPool = new ThreadPoolExecutor(2,
+                5,
+                5,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(3),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.DiscardOldestPolicy());
+        /**
+         *  AbortPolicy 默认拒绝策略,阻塞队列已满,最大线程数已满,不执行,抛出异常
+         *  CallerRunsPolicy 哪个提交的被拒绝任务,给哪个执行,不抛出异常 举例 main线程提交的,则main线程执行
+         *  DiscardPolicy 队列满了,丢掉任务,不执行,不抛出异常
+         *  DiscardOldestPolicy 队列满了,尝试去和最早的竞争,也不会抛出异常
+         */
+
+
         try {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 1; i <= 9; i++) {
                 threadPool.execute(() -> {
                     System.out.println(Thread.currentThread().getName() + " ok");
                 });
