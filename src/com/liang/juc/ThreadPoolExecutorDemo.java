@@ -21,8 +21,15 @@ public class ThreadPoolExecutorDemo {
 //        ExecutorService threadPool = Executors.newCachedThreadPool();//创建一个可变线程池
 
         // 使用ThreadPoolExecutor创建自定义线程池
+        /**
+         * 最大线程数该如何定义(调优)
+         * 1.cpu密集型 根据CPU核心数定义最大线程数,可以保持cpu的效率最高
+         * 2.io密集型 最大线程数需要大于程序中占用io资源多的任务数
+         */
+        //获取当前cpu运行核心数
+        System.out.println("当前cpu运行核心数:"+Runtime.getRuntime().availableProcessors());
         ExecutorService threadPool = new ThreadPoolExecutor(2,
-                5,
+                Runtime.getRuntime().availableProcessors(),
                 5,
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<>(3),
@@ -34,7 +41,6 @@ public class ThreadPoolExecutorDemo {
          *  DiscardPolicy 队列满了,丢掉任务,不执行,不抛出异常
          *  DiscardOldestPolicy 队列满了,尝试去和最早的竞争,也不会抛出异常
          */
-
 
         try {
             for (int i = 1; i <= 9; i++) {
